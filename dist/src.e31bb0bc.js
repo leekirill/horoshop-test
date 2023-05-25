@@ -157,7 +157,7 @@ form.addEventListener('submit', function (evt) {
   showLabel(labelText);
 });
 
-// делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации
+// делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
 
 Array.from(inputs).forEach(function (items) {
   var input = items.children[0];

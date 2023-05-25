@@ -21,7 +21,7 @@ form.addEventListener('submit', (evt) => {
     showLabel(labelText)
 })
 
-// делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации
+// делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
 
 Array.from(inputs).forEach((items) => {
     const input = items.children[0]
