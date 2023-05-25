@@ -139,14 +139,26 @@ var body = document.getElementsByTagName('body');
 var label = document.querySelector('.label');
 var form = document.querySelector('.content__form');
 var inputs = document.querySelectorAll('.content__form--input');
+
+// состояние контента в попапчиках
+
+var labelText = _warnings.default.warn;
+
+// показываем body после полной загрузки страницы
+
 window.addEventListener('load', function (e) {
   return body[0].style.opacity = 1;
 });
-var labelText = _warnings.default.warn;
+
+// сабмит формы
+
 form.addEventListener('submit', function (evt) {
   evt.preventDefault();
   showLabel(labelText);
 });
+
+// делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации
+
 Array.from(inputs).forEach(function (items) {
   var input = items.children[0];
   var span = items.children[1];
@@ -155,8 +167,7 @@ Array.from(inputs).forEach(function (items) {
   });
 });
 
-// const validation = (e) => (e.target.value = input.replace(/[A-Za-z]/g, ''))
-// ;<input type="text" onChange={validation} />
+// проверяем длинну набраного текста и на латыницу
 
 function validation(input, item, span) {
   var inputValue = input.value.length;
@@ -182,6 +193,9 @@ function validation(input, item, span) {
     labelText = _warnings.default.error;
   }
 }
+
+// фун-ция отвечающая за попапы с предупреждениями
+
 function showLabel(value) {
   label.innerHTML = value;
   label.classList.add('active');
@@ -197,6 +211,9 @@ function showLabel(value) {
     removeClass(label, 'success');
   }
 }
+
+// удаляем класы через какое-то время
+
 function removeClass(item, className) {
   setTimeout(function () {
     item.classList.remove(className);

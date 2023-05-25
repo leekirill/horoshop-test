@@ -5,15 +5,23 @@ const label = document.querySelector('.label')
 const form = document.querySelector('.content__form')
 const inputs = document.querySelectorAll('.content__form--input')
 
-window.addEventListener('load', (e) => (body[0].style.opacity = 1))
+// состояние контента в попапчиках
 
 let labelText = warnings.warn
+
+// показываем body после полной загрузки страницы
+
+window.addEventListener('load', (e) => (body[0].style.opacity = 1))
+
+// сабмит формы
 
 form.addEventListener('submit', (evt) => {
     evt.preventDefault()
 
     showLabel(labelText)
 })
+
+// делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации
 
 Array.from(inputs).forEach((items) => {
     const input = items.children[0]
@@ -24,8 +32,7 @@ Array.from(inputs).forEach((items) => {
     })
 })
 
-// const validation = (e) => (e.target.value = input.replace(/[A-Za-z]/g, ''))
-// ;<input type="text" onChange={validation} />
+// проверяем длинну набраного текста и на латыницу
 
 function validation(input, item, span) {
     let inputValue = input.value.length
@@ -52,6 +59,8 @@ function validation(input, item, span) {
     }
 }
 
+// фун-ция отвечающая за попапы с предупреждениями
+
 function showLabel(value) {
     label.innerHTML = value
     label.classList.add('active')
@@ -68,6 +77,8 @@ function showLabel(value) {
         removeClass(label, 'success')
     }
 }
+
+// удаляем класы через какое-то время
 
 function removeClass(item, className) {
     setTimeout(() => {
