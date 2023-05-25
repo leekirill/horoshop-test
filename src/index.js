@@ -3,7 +3,6 @@ import warnings from './warnings'
 const label = document.querySelector('.label')
 const form = document.querySelector('.content__form')
 const inputs = document.querySelectorAll('.content__form--input')
-const btn = document.querySelector('.btn')
 
 let labelText = warnings.warn
 
@@ -22,11 +21,14 @@ Array.from(inputs).forEach((items) => {
     })
 })
 
+// const validation = (e) => (e.target.value = input.replace(/[A-Za-z]/g, ''))
+// ;<input type="text" onChange={validation} />
+
 function validation(input, item, span) {
     let inputValue = input.value.length
     if (inputValue === 0) {
         item.classList.remove('error')
-        labelText = warnings.warn
+        item.value = ''
         // btn.disabled = false
     } else if (inputValue < 2 || inputValue > 10) {
         item.classList.add('error')
@@ -37,6 +39,12 @@ function validation(input, item, span) {
         item.classList.remove('error')
         labelText = warnings.success
         // btn.disabled = false
+    }
+
+    if (input.value.match(/[А-яЁё]/)) {
+        item.classList.add('error')
+        span.innerHTML = `Только латиница`
+        labelText = warnings.error
     }
 }
 

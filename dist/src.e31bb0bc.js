@@ -138,7 +138,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var label = document.querySelector('.label');
 var form = document.querySelector('.content__form');
 var inputs = document.querySelectorAll('.content__form--input');
-var btn = document.querySelector('.btn');
 var labelText = _warnings.default.warn;
 form.addEventListener('submit', function (evt) {
   evt.preventDefault();
@@ -151,11 +150,15 @@ Array.from(inputs).forEach(function (items) {
     validation(input, items, span);
   });
 });
+
+// const validation = (e) => (e.target.value = input.replace(/[A-Za-z]/g, ''))
+// ;<input type="text" onChange={validation} />
+
 function validation(input, item, span) {
   var inputValue = input.value.length;
   if (inputValue === 0) {
     item.classList.remove('error');
-    labelText = _warnings.default.warn;
+    item.value = '';
     // btn.disabled = false
   } else if (inputValue < 2 || inputValue > 10) {
     item.classList.add('error');
@@ -167,8 +170,13 @@ function validation(input, item, span) {
     labelText = _warnings.default.success;
     // btn.disabled = false
   }
-}
 
+  if (input.value.match(/[А-яЁё]/)) {
+    item.classList.add('error');
+    span.innerHTML = "\u0422\u043E\u043B\u044C\u043A\u043E \u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430";
+    labelText = _warnings.default.error;
+  }
+}
 function showLabel(value) {
   label.innerHTML = value;
   label.classList.add('active');
@@ -214,7 +222,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59116" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63412" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
