@@ -159,6 +159,7 @@ function validation(input, item, span) {
   if (inputValue === 0) {
     item.classList.remove('error');
     item.value = '';
+    labelText = _warnings.default.warn;
     // btn.disabled = false
   } else if (inputValue < 2 || inputValue > 10) {
     item.classList.add('error');
@@ -222,7 +223,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63412" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65325" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

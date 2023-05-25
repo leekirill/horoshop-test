@@ -29,6 +29,7 @@ function validation(input, item, span) {
     if (inputValue === 0) {
         item.classList.remove('error')
         item.value = ''
+        labelText = warnings.warn
         // btn.disabled = false
     } else if (inputValue < 2 || inputValue > 10) {
         item.classList.add('error')
