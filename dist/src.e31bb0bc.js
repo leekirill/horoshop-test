@@ -135,9 +135,13 @@ exports.default = _default;
 
 var _warnings = _interopRequireDefault(require("./warnings"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var body = document.getElementsByTagName('body');
 var label = document.querySelector('.label');
 var form = document.querySelector('.content__form');
 var inputs = document.querySelectorAll('.content__form--input');
+window.addEventListener('load', function (e) {
+  return body[0].style.opacity = 1;
+});
 var labelText = _warnings.default.warn;
 form.addEventListener('submit', function (evt) {
   evt.preventDefault();

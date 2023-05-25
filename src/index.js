@@ -1,8 +1,11 @@
 import warnings from './warnings'
 
+const body = document.getElementsByTagName('body')
 const label = document.querySelector('.label')
 const form = document.querySelector('.content__form')
 const inputs = document.querySelectorAll('.content__form--input')
+
+window.addEventListener('load', (e) => (body[0].style.opacity = 1))
 
 let labelText = warnings.warn
 
