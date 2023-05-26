@@ -53,6 +53,8 @@ form.addEventListener('submit', (evt) => {
             modalText = warnings.warn
         }
 
+        // текст для попапа если одно из полей пустое
+
         if (arr.some((a) => a.value === '')) {
             const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
             modalText = `${warnings.warn} в поле ${emptyInputName}`

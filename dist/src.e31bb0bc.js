@@ -200,6 +200,9 @@ _toConsumableArray(inputs).forEach(function (input, i, arr) {
     })) {
       modalText = _warnings.default.warn;
     }
+
+    // текст для попапа если одно из полей пустое
+
     if (arr.some(function (a) {
       return a.value === '';
     })) {
