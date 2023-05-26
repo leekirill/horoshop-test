@@ -8,7 +8,7 @@ const span = document.querySelectorAll('.js-span')
 
 // состояние контента в попапчиках
 
-let modalText = warnings.warn
+let modalText = `${warnings.warn} поля`
 
 // показываем body после полной загрузки страницы
 
@@ -50,14 +50,14 @@ form.addEventListener('submit', (evt) => {
         // текст для попала если поле пустое
 
         if (arr.every((a) => a.value === '')) {
-            modalText = warnings.warn
+            modalText = `${warnings.warn} поля`
         }
 
         // текст для попапа если одно из полей пустое
 
         if (arr.some((a) => a.value === '')) {
             const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
-            modalText = `${warnings.warn} в поле ${emptyInputName}`
+            modalText = `${warnings.warn} поле ${emptyInputName}`
         }
     }
 })

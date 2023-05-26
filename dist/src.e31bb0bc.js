@@ -125,7 +125,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  warn: 'Заполните поля',
+  warn: 'Заполните',
   error: 'Поправь ошибки',
   success: 'Заявка успешно отправлена'
 };
@@ -149,7 +149,7 @@ var span = document.querySelectorAll('.js-span');
 
 // состояние контента в попапчиках
 
-var modalText = _warnings.default.warn;
+var modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
 
 // показываем body после полной загрузки страницы
 
@@ -198,7 +198,7 @@ _toConsumableArray(inputs).forEach(function (input, i, arr) {
     if (arr.every(function (a) {
       return a.value === '';
     })) {
-      modalText = _warnings.default.warn;
+      modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
     }
 
     // текст для попапа если одно из полей пустое
@@ -210,7 +210,7 @@ _toConsumableArray(inputs).forEach(function (input, i, arr) {
       var emptyInputName = (_arr$filter$ = arr.filter(function (a) {
         return a.value === '';
       })[0]) === null || _arr$filter$ === void 0 ? void 0 : _arr$filter$.name;
-      modalText = "".concat(_warnings.default.warn, " \u0432 \u043F\u043E\u043B\u0435 ").concat(emptyInputName);
+      modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u0435 ").concat(emptyInputName);
     }
   }
 });
