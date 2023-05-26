@@ -1,7 +1,7 @@
 import warnings from './warnings'
 
 const body = document.getElementsByTagName('body')
-const label = document.querySelector('.js-modal')
+const modal = document.querySelector('.js-modal')
 const form = document.querySelector('.js-form')
 const inputs = document.querySelectorAll('.js-input')
 const span = document.querySelectorAll('.js-span')
@@ -88,21 +88,21 @@ function showModal(value) {
         ;[...inputs].forEach((input) => (input.value = ''))
         modalText = warnings.warn
     }
-    label.innerHTML = value
-    label.classList.add('active')
-    removeClass(label, 'active')
+    modal.innerHTML = value
+    modal.classList.add('active')
+    removeClass(modal, 'active')
 
     if (value === warnings.error) {
-        label.classList.add('error')
-        removeClass(label, 'error')
+        modal.classList.add('error')
+        removeClass(modal, 'error')
     }
     if (value === warnings.warn) {
-        label.classList.add('warn')
-        removeClass(label, 'warn')
+        modal.classList.add('warn')
+        removeClass(modal, 'warn')
     }
     if (value === warnings.success) {
-        label.classList.add('success')
-        removeClass(label, 'success')
+        modal.classList.add('success')
+        removeClass(modal, 'success')
     }
 }
 

@@ -142,7 +142,7 @@ function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symb
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 var body = document.getElementsByTagName('body');
-var label = document.querySelector('.js-modal');
+var modal = document.querySelector('.js-modal');
 var form = document.querySelector('.js-form');
 var inputs = document.querySelectorAll('.js-input');
 var span = document.querySelectorAll('.js-span');
@@ -241,20 +241,20 @@ function showModal(value) {
     });
     modalText = _warnings.default.warn;
   }
-  label.innerHTML = value;
-  label.classList.add('active');
-  removeClass(label, 'active');
+  modal.innerHTML = value;
+  modal.classList.add('active');
+  removeClass(modal, 'active');
   if (value === _warnings.default.error) {
-    label.classList.add('error');
-    removeClass(label, 'error');
+    modal.classList.add('error');
+    removeClass(modal, 'error');
   }
   if (value === _warnings.default.warn) {
-    label.classList.add('warn');
-    removeClass(label, 'warn');
+    modal.classList.add('warn');
+    removeClass(modal, 'warn');
   }
   if (value === _warnings.default.success) {
-    label.classList.add('success');
-    removeClass(label, 'success');
+    modal.classList.add('success');
+    removeClass(modal, 'success');
   }
 }
 
