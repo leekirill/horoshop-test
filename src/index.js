@@ -86,6 +86,7 @@ function validation(input, span) {
 function showModal(value) {
     if (value === warnings.success) {
         ;[...inputs].forEach((input) => (input.value = ''))
+        modalText = warnings.warn
     }
     label.innerHTML = value
     label.classList.add('active')

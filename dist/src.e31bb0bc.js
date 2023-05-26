@@ -239,6 +239,7 @@ function showModal(value) {
     _toConsumableArray(inputs).forEach(function (input) {
       return input.value = '';
     });
+    modalText = _warnings.default.warn;
   }
   label.innerHTML = value;
   label.classList.add('active');
