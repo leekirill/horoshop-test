@@ -135,14 +135,21 @@ exports.default = _default;
 
 var _warnings = _interopRequireDefault(require("./warnings"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 var body = document.getElementsByTagName('body');
-var label = document.querySelector('.label');
-var form = document.querySelector('.content__form');
-var inputs = document.querySelectorAll('.content__form--input');
+var label = document.querySelector('.js-modal');
+var form = document.querySelector('.js-form');
+var inputs = document.querySelectorAll('.js-input');
+var span = document.querySelectorAll('.js-span');
 
 // состояние контента в попапчиках
 
-var labelText = _warnings.default.warn;
+var modalText = _warnings.default.warn;
 
 // показываем body после полной загрузки страницы
 
@@ -154,59 +161,97 @@ window.addEventListener('load', function (e) {
 
 form.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  showLabel(labelText);
-});
+  showModal(modalText);
+})
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
+;
+_toConsumableArray(inputs).forEach(function (input, i, arr) {
+  input.addEventListener('change', handleInput);
+  function handleInput(evt) {
+    var input = evt.target;
+    validation(input, span[i]);
 
-Array.from(inputs).forEach(function (items) {
-  var input = items.children[0];
-  var span = items.children[1];
-  input.addEventListener('change', function (e) {
-    validation(input, items, span);
-  });
+    // текст для попала с ошибкой или без
+
+    switch (arr.every(function (a) {
+      return !a.className.includes('error');
+    })) {
+      case true:
+        {
+          modalText = _warnings.default.success;
+          break;
+        }
+      case false:
+        {
+          modalText = _warnings.default.error;
+          break;
+        }
+      default:
+        {
+          break;
+        }
+    }
+
+    // текст для попала если поле пустое
+
+    if (arr.every(function (a) {
+      return a.value === '';
+    })) {
+      modalText = _warnings.default.warn;
+    }
+    if (arr.some(function (a) {
+      return a.value === '';
+    })) {
+      var _arr$filter$;
+      var emptyInputName = (_arr$filter$ = arr.filter(function (a) {
+        return a.value === '';
+      })[0]) === null || _arr$filter$ === void 0 ? void 0 : _arr$filter$.name;
+      modalText = "".concat(_warnings.default.warn, " \u0432 \u043F\u043E\u043B\u0435 ").concat(emptyInputName);
+    }
+  }
 });
 
 // проверяем длинну набраного текста и на латыницу
 
-function validation(input, item, span) {
+function validation(input, span) {
   var inputValue = input.value.length;
   if (inputValue === 0) {
-    item.classList.remove('error');
-    item.value = '';
-    labelText = _warnings.default.warn;
-    // btn.disabled = false
+    input.classList.remove('error');
+    modalText = _warnings.default.warn;
   } else if (inputValue < 2 || inputValue > 10) {
-    item.classList.add('error');
-    span.innerHTML = "\u0412 \u043F\u043E\u043B\u0435 ".concat(input.name, " \u043E\u0442 2 \u0434\u043E 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432");
-    labelText = _warnings.default.error;
-    // btn.disabled = true
+    input.classList.add('error');
+    span.innerText = "\u0412 \u043F\u043E\u043B\u0435 ".concat(input.name, " \u043E\u0442 2 \u0434\u043E 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432");
   } else {
-    item.classList.remove('error');
-    labelText = _warnings.default.success;
-    // btn.disabled = false
+    input.classList.remove('error');
   }
-
   if (input.value.match(/[А-яЁё]/)) {
-    item.classList.add('error');
-    span.innerHTML = "\u0422\u043E\u043B\u044C\u043A\u043E \u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430";
-    labelText = _warnings.default.error;
+    input.classList.add('error');
+    span.innerText = "\u0422\u043E\u043B\u044C\u043A\u043E \u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430";
   }
 }
 
 // фун-ция отвечающая за попапы с предупреждениями
 
-function showLabel(value) {
+function showModal(value) {
+  if (value === _warnings.default.success) {
+    ;
+    _toConsumableArray(inputs).forEach(function (input) {
+      return input.value = '';
+    });
+  }
   label.innerHTML = value;
   label.classList.add('active');
   removeClass(label, 'active');
   if (value === _warnings.default.error) {
     label.classList.add('error');
     removeClass(label, 'error');
-  } else if (value === _warnings.default.warn) {
+  }
+  if (value === _warnings.default.warn) {
     label.classList.add('warn');
     removeClass(label, 'warn');
-  } else {
+  }
+  if (value === _warnings.default.success) {
     label.classList.add('success');
     removeClass(label, 'success');
   }
@@ -244,7 +289,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65325" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60697" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

@@ -1,13 +1,14 @@
 import warnings from './warnings'
 
 const body = document.getElementsByTagName('body')
-const label = document.querySelector('.label')
-const form = document.querySelector('.content__form')
-const inputs = document.querySelectorAll('.content__form--input')
+const label = document.querySelector('.js-modal')
+const form = document.querySelector('.js-form')
+const inputs = document.querySelectorAll('.js-input')
+const span = document.querySelectorAll('.js-span')
 
 // состояние контента в попапчиках
 
-let labelText = warnings.warn
+let modalText = warnings.warn
 
 // показываем body после полной загрузки страницы
 
@@ -18,50 +19,74 @@ window.addEventListener('load', (e) => (body[0].style.opacity = 1))
 form.addEventListener('submit', (evt) => {
     evt.preventDefault()
 
-    showLabel(labelText)
+    showModal(modalText)
 })
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
+;[...inputs].forEach((input, i, arr) => {
+    input.addEventListener('change', handleInput)
 
-Array.from(inputs).forEach((items) => {
-    const input = items.children[0]
-    const span = items.children[1]
+    function handleInput(evt) {
+        let input = evt.target
 
-    input.addEventListener('change', (e) => {
-        validation(input, items, span)
-    })
+        validation(input, span[i])
+
+        // текст для попала с ошибкой или без
+
+        switch (arr.every((a) => !a.className.includes('error'))) {
+            case true: {
+                modalText = warnings.success
+                break
+            }
+            case false: {
+                modalText = warnings.error
+                break
+            }
+            default: {
+                break
+            }
+        }
+
+        // текст для попала если поле пустое
+
+        if (arr.every((a) => a.value === '')) {
+            modalText = warnings.warn
+        }
+
+        if (arr.some((a) => a.value === '')) {
+            const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
+            modalText = `${warnings.warn} в поле ${emptyInputName}`
+        }
+    }
 })
 
 // проверяем длинну набраного текста и на латыницу
 
-function validation(input, item, span) {
+function validation(input, span) {
     let inputValue = input.value.length
+
     if (inputValue === 0) {
-        item.classList.remove('error')
-        item.value = ''
-        labelText = warnings.warn
-        // btn.disabled = false
+        input.classList.remove('error')
+        modalText = warnings.warn
     } else if (inputValue < 2 || inputValue > 10) {
-        item.classList.add('error')
-        span.innerHTML = `В поле ${input.name} от 2 до 10 символов`
-        labelText = warnings.error
-        // btn.disabled = true
+        input.classList.add('error')
+        span.innerText = `В поле ${input.name} от 2 до 10 символов`
     } else {
-        item.classList.remove('error')
-        labelText = warnings.success
-        // btn.disabled = false
+        input.classList.remove('error')
     }
 
     if (input.value.match(/[А-яЁё]/)) {
-        item.classList.add('error')
-        span.innerHTML = `Только латиница`
-        labelText = warnings.error
+        input.classList.add('error')
+        span.innerText = `Только латиница`
     }
 }
 
 // фун-ция отвечающая за попапы с предупреждениями
 
-function showLabel(value) {
+function showModal(value) {
+    if (value === warnings.success) {
+        ;[...inputs].forEach((input) => (input.value = ''))
+    }
     label.innerHTML = value
     label.classList.add('active')
     removeClass(label, 'active')
@@ -69,10 +94,12 @@ function showLabel(value) {
     if (value === warnings.error) {
         label.classList.add('error')
         removeClass(label, 'error')
-    } else if (value === warnings.warn) {
+    }
+    if (value === warnings.warn) {
         label.classList.add('warn')
         removeClass(label, 'warn')
-    } else {
+    }
+    if (value === warnings.success) {
         label.classList.add('success')
         removeClass(label, 'success')
     }
