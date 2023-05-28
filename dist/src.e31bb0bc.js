@@ -174,32 +174,9 @@ _toConsumableArray(inputs).forEach(function (input, i, arr) {
 
     // текст для попала с ошибкой или без
 
-    switch (arr.every(function (a) {
+    modalText = arr.every(function (a) {
       return !a.className.includes('error');
-    })) {
-      case true:
-        {
-          modalText = _warnings.default.success;
-          break;
-        }
-      case false:
-        {
-          modalText = _warnings.default.error;
-          break;
-        }
-      default:
-        {
-          break;
-        }
-    }
-
-    // текст для попала если поле пустое
-
-    if (arr.every(function (a) {
-      return a.value === '';
-    })) {
-      modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
-    }
+    }) ? _warnings.default.success : _warnings.default.error;
 
     // текст для попапа если одно из полей пустое
 
@@ -212,17 +189,23 @@ _toConsumableArray(inputs).forEach(function (input, i, arr) {
       })[0]) === null || _arr$filter$ === void 0 ? void 0 : _arr$filter$.name;
       modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u0435 ").concat(emptyInputName);
     }
+
+    // текст для попала если поле пустое
+
+    if (input.value === '') {
+      modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
+    }
   }
 });
 
 // проверяем длинну набраного текста и на латыницу
 
 function validation(input, span) {
-  var inputValue = input.value.length;
-  if (inputValue === 0) {
+  var inputValueLength = input.value.length;
+  if (inputValueLength === 0) {
     input.classList.remove('error');
     modalText = _warnings.default.warn;
-  } else if (inputValue < 2 || inputValue > 10) {
+  } else if (inputValueLength < 2 || inputValueLength > 10) {
     input.classList.add('error');
     span.innerText = "\u0412 \u043F\u043E\u043B\u0435 ".concat(input.name, " \u043E\u0442 2 \u0434\u043E 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432");
   } else {
@@ -237,13 +220,6 @@ function validation(input, span) {
 // фун-ция отвечающая за попапы с предупреждениями
 
 function showModal(value) {
-  if (value === _warnings.default.success) {
-    ;
-    _toConsumableArray(inputs).forEach(function (input) {
-      return input.value = '';
-    });
-    modalText = _warnings.default.warn;
-  }
   modal.innerHTML = value;
   modal.classList.add('active');
   removeClass(modal, 'active');
@@ -256,6 +232,10 @@ function showModal(value) {
     removeClass(modal, 'warn');
   }
   if (value === _warnings.default.success) {
+    inputs.forEach(function (input) {
+      return input.value = '';
+    });
+    modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
     modal.classList.add('success');
     removeClass(modal, 'success');
   }
@@ -293,7 +273,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60697" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58761" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
