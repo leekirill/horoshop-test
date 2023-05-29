@@ -24,7 +24,8 @@ form.addEventListener('submit', (evt) => {
 })
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
-;[...inputs].forEach((input, i, arr) => {
+
+Array.from(inputs).forEach((input, i, arr) => {
     input.addEventListener('change', handleInput)
 
     function handleInput(evt) {
