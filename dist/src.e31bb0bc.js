@@ -130,10 +130,26 @@ var _default = {
   success: 'Заявка успешно отправлена'
 };
 exports.default = _default;
+},{}],"classNames.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  inputError: 'cta__form-input--error',
+  modalActive: 'modal--active',
+  modalError: 'modal--error',
+  modalWarn: 'modal--warn',
+  modalSuccess: 'modal--success'
+};
+exports.default = _default;
 },{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _warnings = _interopRequireDefault(require("./warnings"));
+var _classNames = _interopRequireDefault(require("./classNames"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -153,7 +169,7 @@ var modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
 
 // показываем body после полной загрузки страницы
 
-window.addEventListener('load', function (e) {
+window.addEventListener('load', function () {
   return body[0].style.opacity = 1;
 });
 
@@ -190,11 +206,9 @@ _toConsumableArray(inputs).forEach(function (input, i, arr) {
       modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u0435 ").concat(emptyInputName);
     }
 
-    // текст для попала если поле пустое
+    // текст для попала если оба поля пустых
 
-    if (input.value === '') {
-      modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
-    }
+    if (input.value === '') modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
   }
 });
 
@@ -203,16 +217,16 @@ _toConsumableArray(inputs).forEach(function (input, i, arr) {
 function validation(input, span) {
   var inputValueLength = input.value.length;
   if (inputValueLength === 0) {
-    input.classList.remove('error');
+    input.classList.remove(_classNames.default.inputError);
     modalText = _warnings.default.warn;
   } else if (inputValueLength < 2 || inputValueLength > 10) {
-    input.classList.add('error');
+    input.classList.add(_classNames.default.inputError);
     span.innerText = "\u0412 \u043F\u043E\u043B\u0435 ".concat(input.name, " \u043E\u0442 2 \u0434\u043E 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432");
   } else {
-    input.classList.remove('error');
+    input.classList.remove(_classNames.default.inputError);
   }
   if (input.value.match(/[А-яЁё]/)) {
-    input.classList.add('error');
+    input.classList.add(_classNames.default.inputError);
     span.innerText = "\u0422\u043E\u043B\u044C\u043A\u043E \u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430";
   }
 }
@@ -221,23 +235,23 @@ function validation(input, span) {
 
 function showModal(value) {
   modal.innerHTML = value;
-  modal.classList.add('active');
-  removeClass(modal, 'active');
+  modal.classList.add(_classNames.default.modalActive);
+  removeClass(modal, _classNames.default.modalActive);
   if (value === _warnings.default.error) {
-    modal.classList.add('error');
-    removeClass(modal, 'error');
+    modal.classList.add(_classNames.default.modalError);
+    removeClass(modal, _classNames.default.modalError);
   }
   if (value === _warnings.default.warn) {
-    modal.classList.add('warn');
-    removeClass(modal, 'warn');
+    modal.classList.add(_classNames.default.modalWarn);
+    removeClass(modal, _classNames.default.modalWarn);
   }
   if (value === _warnings.default.success) {
     inputs.forEach(function (input) {
       return input.value = '';
     });
     modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
-    modal.classList.add('success');
-    removeClass(modal, 'success');
+    modal.classList.add(_classNames.default.modalSuccess);
+    removeClass(modal, _classNames.default.modalSuccess);
   }
 }
 
@@ -248,7 +262,7 @@ function removeClass(item, className) {
     item.classList.remove(className);
   }, 2000);
 }
-},{"./warnings":"warnings.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./warnings":"warnings.js","./classNames":"classNames.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -273,7 +287,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58761" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60867" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

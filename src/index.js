@@ -1,4 +1,5 @@
 import warnings from './warnings'
+import cn from './classNames'
 
 const body = document.getElementsByTagName('body')
 const modal = document.querySelector('.js-modal')
@@ -12,7 +13,7 @@ let modalText = `${warnings.warn} поля`
 
 // показываем body после полной загрузки страницы
 
-window.addEventListener('load', (e) => (body[0].style.opacity = 1))
+window.addEventListener('load', () => (body[0].style.opacity = 1))
 
 // сабмит формы
 
@@ -44,11 +45,9 @@ form.addEventListener('submit', (evt) => {
             modalText = `${warnings.warn} поле ${emptyInputName}`
         }
 
-        // текст для попала если поле пустое
+        // текст для попала если оба поля пустых
 
-        if (input.value === '') {
-            modalText = `${warnings.warn} поля`
-        }
+        if (input.value === '') modalText = `${warnings.warn} поля`
     }
 })
 
@@ -58,17 +57,17 @@ function validation(input, span) {
     const inputValueLength = input.value.length
 
     if (inputValueLength === 0) {
-        input.classList.remove('error')
+        input.classList.remove(cn.inputError)
         modalText = warnings.warn
     } else if (inputValueLength < 2 || inputValueLength > 10) {
-        input.classList.add('error')
+        input.classList.add(cn.inputError)
         span.innerText = `В поле ${input.name} от 2 до 10 символов`
     } else {
-        input.classList.remove('error')
+        input.classList.remove(cn.inputError)
     }
 
     if (input.value.match(/[А-яЁё]/)) {
-        input.classList.add('error')
+        input.classList.add(cn.inputError)
         span.innerText = `Только латиница`
     }
 }
@@ -77,22 +76,22 @@ function validation(input, span) {
 
 function showModal(value) {
     modal.innerHTML = value
-    modal.classList.add('active')
-    removeClass(modal, 'active')
+    modal.classList.add(cn.modalActive)
+    removeClass(modal, cn.modalActive)
 
     if (value === warnings.error) {
-        modal.classList.add('error')
-        removeClass(modal, 'error')
+        modal.classList.add(cn.modalError)
+        removeClass(modal, cn.modalError)
     }
     if (value === warnings.warn) {
-        modal.classList.add('warn')
-        removeClass(modal, 'warn')
+        modal.classList.add(cn.modalWarn)
+        removeClass(modal, cn.modalWarn)
     }
     if (value === warnings.success) {
         inputs.forEach((input) => (input.value = ''))
         modalText = `${warnings.warn} поля`
-        modal.classList.add('success')
-        removeClass(modal, 'success')
+        modal.classList.add(cn.modalSuccess)
+        removeClass(modal, cn.modalSuccess)
     }
 }
 
