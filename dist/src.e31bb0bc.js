@@ -178,6 +178,7 @@ form.addEventListener('submit', function (evt) {
 
 Array.from(inputs).forEach(function (input, i, arr) {
   input.addEventListener('change', handleInput);
+  if (input.value === '') modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
   function handleInput(evt) {
     var input = evt.target;
     validation(input, span[i]);
@@ -190,19 +191,42 @@ Array.from(inputs).forEach(function (input, i, arr) {
 
     // текст для попапа если одно из полей пустое
 
-    if (arr.some(function (a) {
-      return a.value === '';
-    })) {
-      var _arr$filter$;
-      var emptyInputName = (_arr$filter$ = arr.filter(function (a) {
-        return a.value === '';
-      })[0]) === null || _arr$filter$ === void 0 ? void 0 : _arr$filter$.name;
-      modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u0435 ").concat(emptyInputName);
-    }
+    // if (input.value === '') {
+    //     console.log(inputs[i].name)
+    // }
+
+    // if (arr.some((a) => a.value === '')) {
+    //     const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
+    //     modalText = `${warnings.warn} поле ${emptyInputName}`
+    // }
+
+    // if (input.value === '') {
+    //     if (input.name === 'name') {
+    //         console.log('name')
+    //     }
+    //     if (input.name === 'email') {
+    //         console.log('email')
+    //     }
+    //     if (input.name === 'domain') {
+    //         console.log('domain')
+    //     }
+    // }
+
+    // switch (input.name) {
+    //     case input['name'] === '':
+    //         alert(input.name)
+    //         break
+    //     case input['email'] === '':
+    //         alert(input.name)
+    //         break
+    //     case input['domain'] === '':
+    //         alert(input.name)
+    //         break
+    //     default:
+    //         break
+    // }
 
     // текст для попала если оба поля пустых
-
-    if (input.value === '') modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
   }
 });
 
@@ -281,7 +305,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58279" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

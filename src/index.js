@@ -28,6 +28,8 @@ form.addEventListener('submit', (evt) => {
 Array.from(inputs).forEach((input, i, arr) => {
     input.addEventListener('change', handleInput)
 
+    if (input.value === '') modalText = `${warnings.warn} поля`
+
     function handleInput(evt) {
         let input = evt.target
 
@@ -41,14 +43,42 @@ Array.from(inputs).forEach((input, i, arr) => {
 
         // текст для попапа если одно из полей пустое
 
-        if (arr.some((a) => a.value === '')) {
-            const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
-            modalText = `${warnings.warn} поле ${emptyInputName}`
-        }
+        // if (input.value === '') {
+        //     console.log(inputs[i].name)
+        // }
+
+        // if (arr.some((a) => a.value === '')) {
+        //     const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
+        //     modalText = `${warnings.warn} поле ${emptyInputName}`
+        // }
+
+        // if (input.value === '') {
+        //     if (input.name === 'name') {
+        //         console.log('name')
+        //     }
+        //     if (input.name === 'email') {
+        //         console.log('email')
+        //     }
+        //     if (input.name === 'domain') {
+        //         console.log('domain')
+        //     }
+        // }
+
+        // switch (input.name) {
+        //     case input['name'] === '':
+        //         alert(input.name)
+        //         break
+        //     case input['email'] === '':
+        //         alert(input.name)
+        //         break
+        //     case input['domain'] === '':
+        //         alert(input.name)
+        //         break
+        //     default:
+        //         break
+        // }
 
         // текст для попала если оба поля пустых
-
-        if (input.value === '') modalText = `${warnings.warn} поля`
     }
 })
 
