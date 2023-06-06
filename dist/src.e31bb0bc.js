@@ -151,6 +151,12 @@ exports.default = _default;
 var _warnings = _interopRequireDefault(require("./warnings"));
 var _classNames = _interopRequireDefault(require("./classNames"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
 var body = document.getElementsByTagName('body');
 var modal = document.querySelector('.js-modal');
 var form = document.querySelector('.js-form');
@@ -171,7 +177,15 @@ window.addEventListener('load', function () {
 
 form.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  showModal(modalText);
+  _toConsumableArray(inputs).forEach(function (e, i) {
+    if (e.value === '') {
+      console.log(i);
+      console.log("".concat(_warnings.default.warn, " \u043F\u043E\u043B\u0435 ").concat(e.name));
+      // return `${warnings.warn} поле ${e.name}`
+    }
+  });
+
+  // showModal(modalText)
 });
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
@@ -179,8 +193,7 @@ form.addEventListener('submit', function (evt) {
 Array.from(inputs).forEach(function (input, i, arr) {
   input.addEventListener('change', handleInput);
   if (input.value === '') modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
-  function handleInput(evt) {
-    var input = evt.target;
+  function handleInput() {
     validation(input, span[i]);
 
     // текст для попала с ошибкой или без
@@ -198,18 +211,6 @@ Array.from(inputs).forEach(function (input, i, arr) {
     // if (arr.some((a) => a.value === '')) {
     //     const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
     //     modalText = `${warnings.warn} поле ${emptyInputName}`
-    // }
-
-    // if (input.value === '') {
-    //     if (input.name === 'name') {
-    //         console.log('name')
-    //     }
-    //     if (input.name === 'email') {
-    //         console.log('email')
-    //     }
-    //     if (input.name === 'domain') {
-    //         console.log('domain')
-    //     }
     // }
 
     // switch (input.name) {
@@ -305,7 +306,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58279" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64452" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];

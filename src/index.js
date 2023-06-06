@@ -19,8 +19,15 @@ window.addEventListener('load', () => (body[0].style.opacity = 1))
 
 form.addEventListener('submit', (evt) => {
     evt.preventDefault()
+    ;[...inputs].forEach((e, i) => {
+        if (e.value === '') {
+            console.log(i)
+            console.log(`${warnings.warn} поле ${e.name}`)
+            // return `${warnings.warn} поле ${e.name}`
+        }
+    })
 
-    showModal(modalText)
+    // showModal(modalText)
 })
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
@@ -30,9 +37,7 @@ Array.from(inputs).forEach((input, i, arr) => {
 
     if (input.value === '') modalText = `${warnings.warn} поля`
 
-    function handleInput(evt) {
-        let input = evt.target
-
+    function handleInput() {
         validation(input, span[i])
 
         // текст для попала с ошибкой или без
@@ -50,18 +55,6 @@ Array.from(inputs).forEach((input, i, arr) => {
         // if (arr.some((a) => a.value === '')) {
         //     const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
         //     modalText = `${warnings.warn} поле ${emptyInputName}`
-        // }
-
-        // if (input.value === '') {
-        //     if (input.name === 'name') {
-        //         console.log('name')
-        //     }
-        //     if (input.name === 'email') {
-        //         console.log('email')
-        //     }
-        //     if (input.name === 'domain') {
-        //         console.log('domain')
-        //     }
         // }
 
         // switch (input.name) {
