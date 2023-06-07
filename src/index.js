@@ -44,7 +44,6 @@ Array.from(inputs).forEach((input, i, arr) => {
 
         if (inputValueLength === 0) {
             input.classList.remove(cn.inputError)
-            modalText = warnings.warn
         } else if (inputValueLength < 2 || inputValueLength > 10) {
             input.classList.add(cn.inputError)
             span[i].innerText = `В поле ${input.name} от 2 до 10 символов`
@@ -69,10 +68,6 @@ function showModal(value) {
     if (value === warnings.error) {
         modal.classList.add(cn.modalError)
         removeClass(modal, cn.modalError)
-    }
-    if (value === warnings.warn) {
-        modal.classList.add(cn.modalWarn)
-        removeClass(modal, cn.modalWarn)
     }
     if (value === warnings.success) {
         inputs.forEach((input) => (input.value = ''))

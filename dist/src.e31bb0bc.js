@@ -125,7 +125,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _default = {
-  warn: 'Заполните',
   error: 'Поправь ошибки',
   success: 'Заявка успешно отправлена'
 };
@@ -141,7 +140,6 @@ var _default = {
   inputError: 'cta__form-input--error',
   modalActive: 'modal--active',
   modalError: 'modal--error',
-  modalWarn: 'modal--warn',
   modalSuccess: 'modal--success'
 };
 exports.default = _default;
@@ -197,7 +195,6 @@ Array.from(inputs).forEach(function (input, i, arr) {
     var inputValueLength = input.value.length;
     if (inputValueLength === 0) {
       input.classList.remove(_classNames.default.inputError);
-      modalText = _warnings.default.warn;
     } else if (inputValueLength < 2 || inputValueLength > 10) {
       input.classList.add(_classNames.default.inputError);
       span[i].innerText = "\u0412 \u043F\u043E\u043B\u0435 ".concat(input.name, " \u043E\u0442 2 \u0434\u043E 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432");
@@ -220,10 +217,6 @@ function showModal(value) {
   if (value === _warnings.default.error) {
     modal.classList.add(_classNames.default.modalError);
     removeClass(modal, _classNames.default.modalError);
-  }
-  if (value === _warnings.default.warn) {
-    modal.classList.add(_classNames.default.modalWarn);
-    removeClass(modal, _classNames.default.modalWarn);
   }
   if (value === _warnings.default.success) {
     inputs.forEach(function (input) {
