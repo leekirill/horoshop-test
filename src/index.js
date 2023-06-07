@@ -9,7 +9,7 @@ const span = document.querySelectorAll('.js-span')
 
 // состояние контента в попапчиках
 
-let modalText = `${warnings.warn} поля`
+let modalText = ''
 
 // показываем body после полной загрузки страницы
 
@@ -19,15 +19,19 @@ window.addEventListener('load', () => (body[0].style.opacity = 1))
 
 form.addEventListener('submit', (evt) => {
     evt.preventDefault()
-    ;[...inputs].forEach((e, i) => {
-        if (e.value === '') {
-            console.log(i)
-            console.log(`${warnings.warn} поле ${e.name}`)
-            // return `${warnings.warn} поле ${e.name}`
+
+    inputs.forEach((input, i) => {
+        if (input.value === '') {
+            input.classList.add(cn.inputError)
+            span[i].innerText = `Заполните поле ${input.name}`
         }
     })
 
-    // showModal(modalText)
+    modalText = [...inputs].every((a) => !a.className.includes('error'))
+        ? warnings.success
+        : warnings.error
+
+    showModal(modalText)
 })
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
@@ -35,66 +39,25 @@ form.addEventListener('submit', (evt) => {
 Array.from(inputs).forEach((input, i, arr) => {
     input.addEventListener('change', handleInput)
 
-    if (input.value === '') modalText = `${warnings.warn} поля`
-
     function handleInput() {
-        validation(input, span[i])
+        const inputValueLength = input.value.length
 
-        // текст для попала с ошибкой или без
+        if (inputValueLength === 0) {
+            input.classList.remove(cn.inputError)
+            modalText = warnings.warn
+        } else if (inputValueLength < 2 || inputValueLength > 10) {
+            input.classList.add(cn.inputError)
+            span[i].innerText = `В поле ${input.name} от 2 до 10 символов`
+        } else {
+            input.classList.remove(cn.inputError)
+        }
 
-        modalText = arr.every((a) => !a.className.includes('error'))
-            ? warnings.success
-            : warnings.error
-
-        // текст для попапа если одно из полей пустое
-
-        // if (input.value === '') {
-        //     console.log(inputs[i].name)
-        // }
-
-        // if (arr.some((a) => a.value === '')) {
-        //     const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
-        //     modalText = `${warnings.warn} поле ${emptyInputName}`
-        // }
-
-        // switch (input.name) {
-        //     case input['name'] === '':
-        //         alert(input.name)
-        //         break
-        //     case input['email'] === '':
-        //         alert(input.name)
-        //         break
-        //     case input['domain'] === '':
-        //         alert(input.name)
-        //         break
-        //     default:
-        //         break
-        // }
-
-        // текст для попала если оба поля пустых
+        if (input.value.match(/[А-яЁё]/)) {
+            input.classList.add(cn.inputError)
+            span[i].innerText = `Только латиница`
+        }
     }
 })
-
-// проверяем длинну набраного текста и на латыницу
-
-function validation(input, span) {
-    const inputValueLength = input.value.length
-
-    if (inputValueLength === 0) {
-        input.classList.remove(cn.inputError)
-        modalText = warnings.warn
-    } else if (inputValueLength < 2 || inputValueLength > 10) {
-        input.classList.add(cn.inputError)
-        span.innerText = `В поле ${input.name} от 2 до 10 символов`
-    } else {
-        input.classList.remove(cn.inputError)
-    }
-
-    if (input.value.match(/[А-яЁё]/)) {
-        input.classList.add(cn.inputError)
-        span.innerText = `Только латиница`
-    }
-}
 
 // фун-ция отвечающая за попапы с предупреждениями
 

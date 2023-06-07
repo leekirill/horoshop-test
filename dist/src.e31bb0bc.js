@@ -165,7 +165,7 @@ var span = document.querySelectorAll('.js-span');
 
 // состояние контента в попапчиках
 
-var modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
+var modalText = '';
 
 // показываем body после полной загрузки страницы
 
@@ -177,78 +177,39 @@ window.addEventListener('load', function () {
 
 form.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  _toConsumableArray(inputs).forEach(function (e, i) {
-    if (e.value === '') {
-      console.log(i);
-      console.log("".concat(_warnings.default.warn, " \u043F\u043E\u043B\u0435 ").concat(e.name));
-      // return `${warnings.warn} поле ${e.name}`
+  inputs.forEach(function (input, i) {
+    if (input.value === '') {
+      input.classList.add(_classNames.default.inputError);
+      span[i].innerText = "\u0417\u0430\u043F\u043E\u043B\u043D\u0438\u0442\u0435 \u043F\u043E\u043B\u0435 ".concat(input.name);
     }
   });
-
-  // showModal(modalText)
+  modalText = _toConsumableArray(inputs).every(function (a) {
+    return !a.className.includes('error');
+  }) ? _warnings.default.success : _warnings.default.error;
+  showModal(modalText);
 });
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
 
 Array.from(inputs).forEach(function (input, i, arr) {
   input.addEventListener('change', handleInput);
-  if (input.value === '') modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
   function handleInput() {
-    validation(input, span[i]);
-
-    // текст для попала с ошибкой или без
-
-    modalText = arr.every(function (a) {
-      return !a.className.includes('error');
-    }) ? _warnings.default.success : _warnings.default.error;
-
-    // текст для попапа если одно из полей пустое
-
-    // if (input.value === '') {
-    //     console.log(inputs[i].name)
-    // }
-
-    // if (arr.some((a) => a.value === '')) {
-    //     const emptyInputName = arr.filter((a) => a.value === '')[0]?.name
-    //     modalText = `${warnings.warn} поле ${emptyInputName}`
-    // }
-
-    // switch (input.name) {
-    //     case input['name'] === '':
-    //         alert(input.name)
-    //         break
-    //     case input['email'] === '':
-    //         alert(input.name)
-    //         break
-    //     case input['domain'] === '':
-    //         alert(input.name)
-    //         break
-    //     default:
-    //         break
-    // }
-
-    // текст для попала если оба поля пустых
+    var inputValueLength = input.value.length;
+    if (inputValueLength === 0) {
+      input.classList.remove(_classNames.default.inputError);
+      modalText = _warnings.default.warn;
+    } else if (inputValueLength < 2 || inputValueLength > 10) {
+      input.classList.add(_classNames.default.inputError);
+      span[i].innerText = "\u0412 \u043F\u043E\u043B\u0435 ".concat(input.name, " \u043E\u0442 2 \u0434\u043E 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432");
+    } else {
+      input.classList.remove(_classNames.default.inputError);
+    }
+    if (input.value.match(/[А-яЁё]/)) {
+      input.classList.add(_classNames.default.inputError);
+      span[i].innerText = "\u0422\u043E\u043B\u044C\u043A\u043E \u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430";
+    }
   }
 });
-
-// проверяем длинну набраного текста и на латыницу
-
-function validation(input, span) {
-  var inputValueLength = input.value.length;
-  if (inputValueLength === 0) {
-    input.classList.remove(_classNames.default.inputError);
-    modalText = _warnings.default.warn;
-  } else if (inputValueLength < 2 || inputValueLength > 10) {
-    input.classList.add(_classNames.default.inputError);
-    span.innerText = "\u0412 \u043F\u043E\u043B\u0435 ".concat(input.name, " \u043E\u0442 2 \u0434\u043E 10 \u0441\u0438\u043C\u0432\u043E\u043B\u043E\u0432");
-  } else {
-    input.classList.remove(_classNames.default.inputError);
-  }
-  if (input.value.match(/[А-яЁё]/)) {
-    input.classList.add(_classNames.default.inputError);
-    span.innerText = "\u0422\u043E\u043B\u044C\u043A\u043E \u043B\u0430\u0442\u0438\u043D\u0438\u0446\u0430";
-  }
-}
 
 // фун-ция отвечающая за попапы с предупреждениями
 
