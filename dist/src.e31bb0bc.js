@@ -222,7 +222,6 @@ function showModal(value) {
     inputs.forEach(function (input) {
       return input.value = '';
     });
-    modalText = "".concat(_warnings.default.warn, " \u043F\u043E\u043B\u044F");
     modal.classList.add(_classNames.default.modalSuccess);
     removeClass(modal, _classNames.default.modalSuccess);
   }

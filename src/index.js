@@ -70,7 +70,6 @@ function showModal(value) {
     }
     if (value === warnings.success) {
         inputs.forEach((input) => (input.value = ''))
-        modalText = `${warnings.warn} поля`
         modal.classList.add(cn.modalSuccess)
         removeClass(modal, cn.modalSuccess)
     }
