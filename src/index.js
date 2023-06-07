@@ -26,7 +26,6 @@ form.addEventListener('submit', (evt) => {
             span[i].innerText = `Заполните поле ${input.name}`
         }
     })
-
     modalText = [...inputs].every((a) => !a.className.includes('error'))
         ? warnings.success
         : warnings.error
