@@ -189,7 +189,7 @@ form.addEventListener('submit', function (evt) {
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
 
-Array.from(inputs).forEach(function (input, i, arr) {
+Array.from(inputs).forEach(function (input, i) {
   input.addEventListener('change', handleInput);
   function handleInput() {
     var inputValueLength = input.value.length;

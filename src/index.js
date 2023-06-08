@@ -26,6 +26,7 @@ form.addEventListener('submit', (evt) => {
             span[i].innerText = `Заполните поле ${input.name}`
         }
     })
+
     modalText = [...inputs].every((a) => !a.className.includes('error'))
         ? warnings.success
         : warnings.error
@@ -35,7 +36,7 @@ form.addEventListener('submit', (evt) => {
 
 // делаем из псевдомассива массив и перебираем, находим наши елементы из DOM и вызываем фун-цию валидации при каждом расфокусе
 
-Array.from(inputs).forEach((input, i, arr) => {
+Array.from(inputs).forEach((input, i) => {
     input.addEventListener('change', handleInput)
 
     function handleInput() {
